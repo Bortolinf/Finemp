@@ -16,7 +16,7 @@
     <div class="card">
         <div class="card-body">
 
-            <table class="table table-hover">
+            <table class="table table-hover table-sm">
                 <tr>
                     <th>Cód.Conta</th>
                     <th>Descrição</th>

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Filial')
+@section('title', 'Editar Conta')
 
 @section('content_header')
-    <h1>Editar Filial</h1>
+    <h1>Editar Conta</h1>
 
 @endsection
 
@@ -23,19 +23,43 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('companies.update', ['company'=>$company->id])}}" method="POST" class="form-horizontal">
+            <form action="{{ route('accounts.update', ['account'=>$account->id_account])}}" method="POST" class="form-horizontal">
                 @csrf
                 @method('PUT')
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Nome</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="name" value="{{$company->name}}" class="form-control @error('name') is-invalid @enderror" />
+                    <label class="col-sm-3 col-form-label">Código </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="id_account" value="{{$account->id_account}}" class="form-control" disabled />
                     </div>
                 </div>
 
                 <div class="form-group row">
                 </div>
   
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Descrição</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="description" value="{{$account->description}}" class="form-control @error('description') is-invalid @enderror" />
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Analítica / Sintética</label>
+                    <div class="col-sm-1">
+                        <select class="form-control" name="type" style="width: 100%;">
+                        <option selected="selected">{{$account->type}}</option>
+                        <option>
+                            @if ($account->type == 'A') S
+                            @else A 
+                            @endif
+                        </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                </div>
                
                 <div class="form-group row">
                     <div class="col-sm-9">

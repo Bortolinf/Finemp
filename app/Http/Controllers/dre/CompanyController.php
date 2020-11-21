@@ -171,7 +171,7 @@ class CompanyController extends Controller
 
         return redirect()->route('companies.index');
 
-    }
+    } // update
 
     /**
      * Remove the specified resource from storage.

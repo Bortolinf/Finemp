@@ -56,14 +56,18 @@ Route::prefix('painel')->group(function(){
 
 
 
-//prefixo erp
+//prefixo dre
 Route::prefix('dre')->group(function(){
 
     // esse comando gera todas as rotas do crud das filiais
-    Route::resource('companies', 'dre\CompanyController')->middleware('can:Editar Filiais');
+    Route::resource('companies', 'dre\CompanyController')->middleware('can:Editar_Filiais');
 
     // esse comando gera todas as rotas do crud das contas
-    Route::resource('accounts', 'dre\AccountController')->middleware('can:Editar Contas');
+    Route::resource('accounts', 'dre\AccountController')->middleware('can:Editar_Contas');
+
+    // esse comando gera todas as rotas do crud dos lancamentos
+    Route::resource('entries', 'dre\EntryController')->middleware('can:Editar_Lanctos');
+    Route::post('addEntry', 'dre\EntryController@addEntry')->name('addEntry');
 
 
     Route::get('products.toPdf', 'Erp\ProductController@toPdf')->name('products.toPdf');

@@ -21,10 +21,11 @@ class AccountController extends Controller
 
     public function index()
     {
-        $accounts = Account::paginate(10);
+        $accounts = Account::paginate(15);
         return view('dre.accounts.index', [
             'accounts' => $accounts
         ]);
+
     }
 
     public function create()
@@ -50,7 +51,7 @@ class AccountController extends Controller
 
         $messages = [
             'id_account.unique' => 'Código da Conta Já Utilizado',
-            'id_account.required' => 'Informar Código da Conta (ex: 1.01',
+            'id_account.required' => 'Informar Código da Conta (ex: 1.01)',
             'description.required' => 'Informar Descrição',
         ];
 
@@ -92,16 +93,61 @@ class AccountController extends Controller
 
     public function edit($id)
     {
-        //
+        $account = Account::find($id);
+        if ($account) {
+            return view('dre.accounts.edit', [
+                'account' => $account
+            ]);
+        }
+        return redirect()->route('accounts.index');
     }
+
 
     public function update(Request $request, $id)
     {
-        //
-    }
+        $account = Account::find($id);
+        if ($account) {
+            $data = $request->only([
+                'description',
+                'type'
+            ]);
+
+
+            $messages = [
+                'description.required' => 'Informar Descrição da Conta',
+                'type.requires' => 'Informar tipo: Sintétca ou Analítica'
+            ];
+            // so fazer este validator quando alterar o nome
+            $validator = Validator::make($data, [
+                'description' => ['required', 'string', 'max:100'],
+                'type' => ['required', 'string', 'max:1'],
+            ],
+            $messages
+            );
+
+            if ($validator->fails()) {
+                return redirect()->route('accounts.edit', [
+                    'account' => $id
+                ])->withErrors($validator);
+            }
+    
+            $account->description = $data['description'];
+            $account->type = $data['type'];
+            $account->save();
+            
+        } // if($account)
+
+        return redirect()->route('accounts.index');
+
+    } // update
+
+
 
     public function destroy($id)
     {
-        //
+        $account = Account::find($id);
+        $account->delete();
+        return redirect()->route('accounts.index');
     }
+
 }

@@ -14,5 +14,11 @@ class Account extends Model
     protected $primaryKey = 'id_account';  // seta o campo chave
     public $incrementing = false;    // seta campo chave como nao incremental
 
+    
+    public function entries()
+    {
+        return $this->belongsToMany(Entries::class)->withTimestamps();
+    }
+
 
 }

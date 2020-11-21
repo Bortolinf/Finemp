@@ -278,7 +278,7 @@ return [
             'text'    => 'Lançamentos Diários',
             'icon'    => 'fas fa-fw fa-share',
             'url'  => 'dre/entries',
-            'can'  => 'Lanctos_Diarios',
+            'can'  => 'Editar_Lanctos',
         ],
         [
             'text'    => 'Demonstrativos',
