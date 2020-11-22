@@ -70,28 +70,9 @@ Route::prefix('dre')->group(function(){
     Route::post('addEntry', 'dre\EntryController@addEntry')->name('addEntry');
 
 
-    Route::get('products.toPdf', 'Erp\ProductController@toPdf')->name('products.toPdf');
-    Route::get('products.toExcel', 'Erp\ProductController@toExcel')->name('products.toExcel');
-
 
 }); 
 
-
-//prefixo publicfinds
-Route::prefix('publicfinds')->group(function(){
-    // esse comando gera todas as rotas do crud dos users
-    Route::get('ncms', 'Erp\PublicFindsController@ncms');
-    Route::get('municipios', 'Erp\PublicFindsController@municipios');
-
-}); 
-
-
-//prefixo publicreadings
-Route::prefix('publicreadings')->group(function(){
-    // esse comando gera todas as rotas do crud dos users
-    Route::get('ncm/{ncm}', 'Erp\PublicReadingsController@ncm');
-
-}); 
 
 
 
