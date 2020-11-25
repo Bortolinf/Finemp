@@ -144,6 +144,7 @@ class EntryController extends Controller
             $entry->info = $data['info'];
             $entry->date = '2020-11-25';
             $entry->save();
+            $entry->account_description = $entry->account->description;
             return response()->json($entry);
             //return response()->json(['success'=>'Incluído com Sucesso']);
 

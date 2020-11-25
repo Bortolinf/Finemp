@@ -122,54 +122,6 @@
 
 
 
-
-//  -------- outro codigo ---------- desativei por enquanto
-$(document).ready(function(){
-            $('#formSubmit').click(function(e){
-                e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '{{ route('addEntry')}}',
-                    method: 'post',
-                    data: {
-                            'value': $('input[name=value]').val(),
-                            'es': $('select[name=es]').val(),
-                            'info': $('textarea[name=info]').val(),
-                            'company': $('select[name=company]').val(),
-                            'account': $('select[name=account]').val()
-                    },
-                    success: function(result){
-                        if(result.errors)
-                        {
-                            $('.alert-danger').html('');
-
-                            $.each(result.errors, function(key, value){
-                                $('.alert-danger').show();
-                                $('.alert-danger').append('<li>'+value+'</li>');
-                            });
-                        }
-                        else
-                        {
-                            $('.alert-danger').hide();
-                            $('#create').modal('hide');
-                        }
-                    }
-                });
-            });
-        });
-
-
-//  ---------
-
-
-
-
-
-
   $("#add").click(function() {
     $.ajax({
       type: 'POST',
@@ -198,11 +150,10 @@ $(document).ready(function(){
           let url_delete = '{{ route("entries.destroy", ['entry' => ":id"]) }}';
           url_delete = url_delete.replace(':id', data.id);
           let confirm_del = " onsubmit=\"return confirm('Tem certeza que deseja Excluir?')";
-          console.log(confirm_del);
           $('.error').remove();
           $('#table').append("<tr>"+
                         "<td>" + data.date + "</td>"+
-                        "<td>" + data.account + "</td>"+
+                        "<td>" + data.account_description + "</td>"+
                         "<td>" + data.es + "</td>"+
                         "<td>" + data.value + "</td>"+
                         "<td><a href='" + url_edit +"' class='btn btn-sm btn-info'>Editar</a>" +

@@ -78,4 +78,3 @@ Route::prefix('dre')->group(function(){
 
 Route::fallback('Site\PageController@index');
 
-

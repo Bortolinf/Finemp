@@ -18,7 +18,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Valor</label>
                 <div class="col-sm-8">
-                   <p class="error text-center alert alert-danger hidden"></p>
+                    <!--  <p class="error text-center alert alert-danger hidden"></p>  -->
                     <input type="text" name="value" value="{{old('value')}}" class="form-control @error('value') is-invalid @enderror" />
                 </div>
                 <div class="col-sm-2">
