@@ -37,7 +37,7 @@ class EntryController extends Controller
         if ($request->has('q')) $q = $request->query('q');
 
         if ($sortBy == "Valor") $sort = 'value';
-        if ($sortBy == "Data") $sort = 'value';
+        if ($sortBy == "Data") $sort = 'date';
         if ($sortBy == "Conta") $sort = 'account_id';
 
         $entries = Entry::search($q)->orderBy($sort, $orderBy)->paginate($perPage);
@@ -70,6 +70,7 @@ class EntryController extends Controller
         $messages = [
             'account.required' => 'Selecionar Conta',
             'value.required' => 'Informar Valor do Lançamento',
+            'date.required' => 'Informar Data de Lançamento',
         ];
 
         $validator = Validator::make(
@@ -106,6 +107,7 @@ class EntryController extends Controller
     {
         $data = $request->only([
             'value',
+            'date',
             'es',
             'account',
             'company',
@@ -119,11 +121,14 @@ class EntryController extends Controller
             $messages = [
                 'account.required' => 'Selecionar Conta',
                 'value.required' => 'Informar Valor do Lançamento',
+                'date.required' => 'Informar Data de Lançamento',
+                'date.date' => 'Data Inválida',
             ];
             
             $validator = Validator::make(
                 $data,
                 [
+                    'date' => ['date', 'required'],
                     'account' => ['required'],
                     'value' => ['required', 'numeric'],
                 ],
@@ -142,9 +147,10 @@ class EntryController extends Controller
             $entry->account_id = $data['account'];
             $entry->company_id = $data['company'];
             $entry->info = $data['info'];
-            $entry->date = '2020-11-25';
+            $entry->date =  $data['date'];
             $entry->save();
             $entry->account_description = $entry->account->description;
+            $entry->company_name = $entry->company->name;
             return response()->json($entry);
             //return response()->json(['success'=>'Incluído com Sucesso']);
 
@@ -172,6 +178,66 @@ class EntryController extends Controller
     {
         //
     }
+
+    public function updateEntry(Request $request)
+    {
+        $data = $request->only([
+            'id',
+            'value',
+            'date',
+            'es',
+            'account',
+            'company',
+            'info'
+            ]);
+
+
+            $messages = [
+                'id.exists' => 'Lançamento inválido, tente novamente',
+                'account.required' => 'Selecionar Conta',
+                'value.required' => 'Informar Valor do Lançamento',
+                'date.required' => 'Informar Data de Lançamento',
+                'date.date' => 'Data Inválida',
+            ];
+            
+
+            $validator = Validator::make(
+                $data,
+                [
+                    'id' => ['exists:entries'],
+                    'date' => ['date', 'required'],
+                    'account' => ['required'],
+                    'value' => ['required', 'numeric'],
+                ],
+                $messages
+            );
+            
+            if ($validator->fails())
+            {
+                return response()->json(['errors'=>$validator->errors()->all()]);
+             // return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+            }
+            
+
+            $entry = Entry::find($data['id']);
+            if ($entry) {
+                $entry->value = $data['value'];
+                $entry->es = $data['es'];
+                $entry->account_id = $data['account'];
+                $entry->company_id = $data['company'];
+                $entry->info = $data['info'];
+                $entry->date =  $data['date'];
+                $entry->save();
+                $entry->account_description = $entry->account->description;
+                $entry->company_name = $entry->company->name;
+                return response()->json($entry);
+               // return redirect()->route('products.index');
+
+            }
+
+    }
+
+
 
 
     public function destroy($id)

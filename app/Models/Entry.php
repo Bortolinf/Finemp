@@ -20,7 +20,7 @@ class Entry extends Model
 
     public function company()
     {
-        return $this->hasOne('App\Models\Company');
+        return $this->hasOne('App\Models\Company', 'id', 'company_id');
     }
 
 

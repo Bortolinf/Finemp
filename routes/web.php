@@ -68,6 +68,7 @@ Route::prefix('dre')->group(function(){
     // esse comando gera todas as rotas do crud dos lancamentos
     Route::resource('entries', 'dre\EntryController')->middleware('can:Editar_Lanctos');
     Route::post('addEntry', 'dre\EntryController@addEntry')->name('addEntry');
+    Route::post('updateEntry', 'dre\EntryController@updateEntry')->name('updateEntry');
 
 
 

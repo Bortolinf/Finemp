@@ -64,17 +64,30 @@
                     <th>Conta</th>
                     <th>Tipo</th>
                     <th>Valor</th>
+                    <th>Filial</th>
                     <th>Ações</th>
                 </tr>
                 @foreach($entries as $entry)
-                    <tr>
+                    <tr class="entry{{$entry->id}}">
                         <td>{{$entry->date}}</td>
                         <td>{{$entry->account->description}}</td>
                         <td>{{$entry->es}}</td>
                         <td>{{$entry->value}}</td>
+                        <td>{{$entry->company->name}}</td>
                         <td>
                         @can('Editar_Lanctos')    
-                            <a href="{{ route('entries.edit', ['entry' => $entry->id]) }}" class="btn btn-sm btn-info">Editar</a>
+                           <!-- <a href="{{ route('entries.edit', ['entry' => $entry->id]) }}" class="btn btn-sm btn-info">Editar</a> -->
+
+                            <a href="#" class="edit-modal btn btn-warning btn-sm" 
+                               data-id="{{$entry->id}}"
+                               data-value="{{$entry->value}}"
+                               data-date="{{$entry->date}}"
+                               data-info="{{$entry->info}}"
+                               data-es="{{$entry->es}}"
+                               data-account="{{$entry->account_id}}"
+                               data-company="{{$entry->company_id}}"
+                                >
+                              Editar </a>
 
                         @endcan
                         @can('Editar_Lanctos')
@@ -115,79 +128,143 @@
 {{-- ajax Form Add Post--}}
   $(document).on('click','.create-modal', function() {
     $('#create').modal('show');
+    $('#id').val('');
+    $('#date').val(today());  // assumir data de hoje
+    $('#value').val(0);
+    $('#info').val('');
+    $('#es').val('S');
     $('.form-horizontal').show();
     $('.modal-title').text('Incluir Lançamento');
+    $('.error').hide();
+
+
   });
 
 
 
 
   $("#add").click(function() {
+    document.querySelector('p.error').innerHTML = '';
+    let route = '';
+    let isedit = false;
+    if ($('#id').val() == '') {
+      route = '{{ route('addEntry')}}'
+    } else {
+      route = '{{ route('updateEntry')}}'
+      isedit = true;
+    }
+
     $.ajax({
       type: 'POST',
-      url: '{{ route('addEntry')}}',
+      url: route,
       headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
       data: {
+        'id': $('input[name=id]').val(),
         'value': $('input[name=value]').val(),
+        'date': $('input[name=date]').val(),
         'es': $('select[name=es]').val(),
         'info': $('textarea[name=info]').val(),
         'company': $('select[name=company]').val(),
         'account': $('select[name=account]').val()
       },
       success: function(data){
+        console.log(data.value);
         if ((data.errors)) {
-          $('.error').removeClass('hidden');
-          $('.error').text(data.errors.value);
-          $('.error').text(data.errors.es);
-          $('.error').text(data.errors.info);
-          $('.error').text(data.errors.company);
-          $('.error').text(data.errors.account);
+            le = "<ul>";
+            data.errors.forEach(e => {
+                le += '<li>' + e;
+            });
+            le += '</ul>';
+            document.querySelector('p.error').innerHTML = le;
+            $('.error').show();
         } else {
-          let url_edit = '{{ route("entries.edit", ['entry' => ":id"]) }}';
-          url_edit = url_edit.replace(':id', data.id);
           let url_delete = '{{ route("entries.destroy", ['entry' => ":id"]) }}';
           url_delete = url_delete.replace(':id', data.id);
           let confirm_del = " onsubmit=\"return confirm('Tem certeza que deseja Excluir?')";
-          $('.error').remove();
-          $('#table').append("<tr>"+
+          $('.error').hide();
+          let conteudo_linha = "<tr class='entry" + data.id + "'>" +
                         "<td>" + data.date + "</td>"+
                         "<td>" + data.account_description + "</td>"+
                         "<td>" + data.es + "</td>"+
                         "<td>" + data.value + "</td>"+
-                        "<td><a href='" + url_edit +"' class='btn btn-sm btn-info'>Editar</a>" +
+                        "<td>" + data.company_name + "</td>"+
+                        "<td>" +
+                        
+                          "<a href='#' class='edit-modal btn btn-warning btn-sm'" + 
+                               "data-id='" + data.id + "'" +
+                               "data-value='" + data.value + "'" +
+                               "data-date='" + data.date + "'" +
+                               "data-info='" + data.info + "'" +
+                               "data-es='" + data.es + "'" +
+                               "data-account='" + data.account_id + "'" +
+                               "data-company='" + data.company_id + "'" +
+                               ">Editar </a>" +
                         "<form class='d-inline' method='POST' action='" + url_delete + "'>" +
                            ' @csrf ' + ' @method("DELETE")' + "<button class='btn btn-sm btn-danger'>Excluir</button></form>" +
-                        "</td></tr>"                        
-                         );
+                        "</td></tr>";
+          if(isedit) {
+            $('.entry' + data.id).replaceWith(conteudo_linha);
+            $('#create').modal('hide');
+          } else
+          {
+            $('#table').append(conteudo_linha);
+          }
         }
       },
     });
+
     $('input[name="value"]').val('');
     $('textarea[name="info"]').val('');
     $('input[name="value"]').focus();
 
   });
 
+
+
+// funcoes de edicao de registro
+$(document).on('click', '.edit-modal', function() {
+//  /\/\/ continuar daqui que nao esta puxando os dados
+  $('#id').val($(this).data('id'));
+  $('#value').val($(this).data('value'));
+  $('#date').val($(this).data('date'));
+  $('#edit').modal('show');
+  $('#info').val($(this).data('info'));
+  $('#es').val($(this).data('es'));
+  $('#company').val($(this).data('company'));
+  $('#account').val($(this).data('account'));
+
+    $('#create').modal('show');
+    $('.form-horizontal').show();
+    $('.modal-title').text('Alterar Lançamento');
+    $('.error').hide();
+
+  });
+
+
+// retorna data atual
+  function today() {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1; 
+    let yyyy = today.getFullYear();
+    if(dd<10) 
+    {
+        dd='0'+dd;
+    } 
+    if(mm<10) 
+    {
+      mm='0'+mm;
+    } 
+    return yyyy+'-'+mm+'-'+dd;
+  }
+
+
 </script>
 
 
 
-
-<script>
-const cs = (el)=> document.querySelectorAll(el);
-const c = (el)=> document.querySelector(el);
-function selncm() {
-    let selectedNcm = c('select.selectncm').value;
-    arrayNcm = selectedNcm.split('||');
-    c('input[name="ncm"]').value = arrayNcm[0];
-    c('small.ncmdsc').innerHTML = arrayNcm[1];
-}
-
-
-function ajaxCreate() {
-}
 
 
 
