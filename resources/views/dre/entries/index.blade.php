@@ -112,7 +112,7 @@
 
 
 
-@include('/dre/partials/modalentry')
+@include('/dre/entries/modalentry')
 
 
 @endsection

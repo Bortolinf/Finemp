@@ -70,6 +70,8 @@ Route::prefix('dre')->group(function(){
     Route::post('addEntry', 'dre\EntryController@addEntry')->name('addEntry');
     Route::post('updateEntry', 'dre\EntryController@updateEntry')->name('updateEntry');
 
+    Route::get('dre_simples', 'dre\ReportsController@dresimples')->name('dre_simples');
+
 
 
 }); 

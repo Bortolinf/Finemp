@@ -288,7 +288,7 @@ return [
                     'text' => 'DRE Simplificado',
                     'url'  => 'dre/dre_simples',
                     'can'  => 'DRE_Simplificado',
-                    'icon'    => 'fas fa-fw fa-upload',
+                    'icon'    => 'fas fa-fw fa-list',
                 ],
             ],
         ],
