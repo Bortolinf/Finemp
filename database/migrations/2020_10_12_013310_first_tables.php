@@ -52,7 +52,7 @@ class FirstTables extends Migration
             $table->string('special_rule', 10)->nullable();     // alguma regra especial
             $table->string('special_rule_cod', 15)->nullable(); // algum código vinculado a regra especial
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->primary('id_account');
+            $table->primary(['id_account', 'tenant_id']);
 
         });
 

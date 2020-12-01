@@ -24,8 +24,12 @@ class ReportsController extends Controller
 
     public function dresimples(Request $request)
     {
+
+        $ten = auth()->user()->tenant_id;
          //  SELECT `date`, `account_id`, `es`, SUM(`value`) FROM `entries` WHERE 1 GROUP by `account_id`
          //$entries = DB::select('select account_id, sum(value), es, date from entries where es = ? group by account_id', ['S']);
+
+
         $entries = DB::select("
                         SELECT pcx.id_account
                         , pcx.description 
@@ -41,7 +45,8 @@ class ReportsController extends Controller
                                 SELECT sum(value)
                                     FROM entries
                                     WHERE es = 'E' AND date < '2020-11-01' AND 
-                                        account_id  = x.account_id 
+                                        account_id  = x.account_id AND
+                                        tenant_id = :ten1
                                     ),
                                 0.00
                                 ) - COALESCE (
@@ -49,7 +54,8 @@ class ReportsController extends Controller
                                 SELECT sum(value)
                                     FROM entries
                                     WHERE es = 'S' AND date < '2020-11-01' AND 
-                                        account_id  = x.account_id 
+                                        account_id  = x.account_id  AND
+                                        tenant_id = :ten2
                                     ),
                                 0.00
                                 )                       
@@ -67,7 +73,8 @@ class ReportsController extends Controller
                                 SELECT sum(value)
                                     FROM entries
                                     WHERE es = 'E' AND date  <=  '2020-12-01' AND 
-                                        account_id  = x.account_id 
+                                        account_id  = x.account_id  AND
+                                        tenant_id = :ten3
                                     ),
                                 0.00
                                 ) - COALESCE (
@@ -75,7 +82,8 @@ class ReportsController extends Controller
                                 SELECT sum(value)
                                     FROM entries
                                     WHERE es = 'S' AND date <=  '2020-12-01' AND 
-                                        account_id  = x.account_id 
+                                        account_id  = x.account_id  AND
+                                        tenant_id = :ten4
                                     ),
                                 0.00
                                 )                        
@@ -96,19 +104,28 @@ class ReportsController extends Controller
                                     END AS saida   
                                 FROM entries AS lan
                                 WHERE lan.date >= '2020-11-02'
-                                AND lan.date <= '2020-12-14'
+                                AND lan.date <= '2020-12-14'  and
+                                    lan.tenant_id = :ten5
                 
                             ) AS x
                     GROUP BY x.account_id
                         ) AS xx
                         
                     JOIN accounts pcx 
-                    ON xx.account_id LIKE CONCAT (pcx.id_account, '%')
+                    ON xx.account_id LIKE CONCAT (pcx.id_account, '%')  AND
+                       pcx.tenant_id = :ten6
                 GROUP BY pcx.id_account
                         , pcx.description 
                 ORDER BY pcx.id_account ASC
                         ; 
-        ");
+        ", [
+            'ten1' => $ten,
+            'ten2' => $ten,
+            'ten3' => $ten,
+            'ten4' => $ten,
+            'ten5' => $ten,
+            'ten6' => $ten,
+            ] );
             
 
         // 'SELECT `company_id`,  `date`, `account_id`, `es`, SUM(`value`) as `value` FROM `entries` 

@@ -3,7 +3,7 @@
 -- BALANCETE --
  
 -- balancete contabil (Script para Firebird 2.5.1, Oracle 11g R2, Postgres 9.1)   
-  SELECT pcx.account_id
+  SELECT pcx.id_account
        , pcx.description 
        , sum(xx.saldo_inicial) AS saldo_inicial 
        , sum(xx.entrada)       AS entrada
@@ -16,7 +16,7 @@
                (
                 SELECT sum(value)
                    FROM entries
-                   WHERE es = 'E' AND date < '2012-07-04' AND 
+                   WHERE es = 'E' AND date < '2020-11-01' AND 
                          account_id  = x.account_id 
                    ),
                  0.00
@@ -24,7 +24,7 @@
                (
                 SELECT sum(value)
                    FROM entries
-                   WHERE es = 'S' AND date < '2012-07-04' AND 
+                   WHERE es = 'S' AND date < '2020-11-01' AND 
                          account_id  = x.account_id 
                    ),
                  0.00
@@ -42,7 +42,7 @@
                (
                 SELECT sum(value)
                    FROM entries
-                   WHERE es = 'E' AND date  <=  '2012-07-14' AND 
+                   WHERE es = 'E' AND date  <=  '2020-12-01' AND 
                          account_id  = x.account_id 
                    ),
                  0.00
@@ -50,7 +50,7 @@
                (
                 SELECT sum(value)
                    FROM entries
-                   WHERE es = 'S' AND date <=  '2012-07-14' AND 
+                   WHERE es = 'S' AND date <=  '2020-12-01' AND 
                          account_id  = x.account_id 
                    ),
                  0.00
@@ -71,8 +71,8 @@
                                 0.00 
                       END AS saida   
                  FROM entries AS lan
-                WHERE lan.date >= '2012-07-04'
-                  AND lan.date <= '2012-07-14'
+                WHERE lan.date >= '2020-11-02'
+                  AND lan.date <= '2020-12-14'
 
              ) AS x
       GROUP BY x.account_id
