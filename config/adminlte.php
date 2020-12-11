@@ -290,6 +290,18 @@ return [
                     'can'  => 'DRE_Simplificado',
                     'icon'    => 'fas fa-fw fa-list',
                 ],
+                [
+                    'text' => 'DRE Mensal',
+                    'url'  => 'dre/dre_mes',
+                    'can'  => 'DRE_Mes',
+                    'icon'    => 'fas fa-fw fa-list',
+                ],
+                [
+                    'text' => 'DRE Comparativo',
+                    'url'  => 'dre/dre_comparativo',
+                    'can'  => 'DRE_Comparativo',
+                    'icon'    => 'fas fa-fw fa-list',
+                ],
             ],
         ],
         [

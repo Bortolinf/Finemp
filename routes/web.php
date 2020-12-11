@@ -72,7 +72,11 @@ Route::prefix('dre')->group(function(){
 
     Route::get('dre_simples', 'dre\ReportsController@dresimples')->name('dre_simples');
 
+    Route::get('dre_mes', 'dre\ReportsController@dreDoMes')->name('dre_mes');
+    Route::post('dre_mes', 'dre\ReportsController@dreDoMes')->name('dre_mes');
 
+    Route::get('dre_comparativo', 'dre\ReportsController@dreComparativo')->name('dre_comparativo');
+    Route::post('dre_comparativo', 'dre\ReportsController@dreComparativo')->name('dre_comparativo');
 
 }); 
 

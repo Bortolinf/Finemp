@@ -62,7 +62,6 @@
                 <tr>
                     <th>Data</th>
                     <th>Conta</th>
-                    <th>Tipo</th>
                     <th>Valor</th>
                     <th>Filial</th>
                     <th>Ações</th>
@@ -71,7 +70,6 @@
                     <tr class="entry{{$entry->id}}">
                         <td>{{$entry->date}}</td>
                         <td>{{$entry->account->description}}</td>
-                        <td>{{$entry->es}}</td>
                         <td>{{$entry->value}}</td>
                         <td>{{$entry->company->name}}</td>
                         <td>
@@ -83,7 +81,6 @@
                                data-value="{{$entry->value}}"
                                data-date="{{$entry->date}}"
                                data-info="{{$entry->info}}"
-                               data-es="{{$entry->es}}"
                                data-account="{{$entry->account_id}}"
                                data-company="{{$entry->company_id}}"
                                 >
@@ -132,7 +129,6 @@
     $('#date').val(today());  // assumir data de hoje
     $('#value').val(0);
     $('#info').val('');
-    $('#es').val('S');
     $('.form-horizontal').show();
     $('.modal-title').text('Incluir Lançamento');
     $('.error').hide();
@@ -164,7 +160,6 @@
         'id': $('input[name=id]').val(),
         'value': $('input[name=value]').val(),
         'date': $('input[name=date]').val(),
-        'es': $('select[name=es]').val(),
         'info': $('textarea[name=info]').val(),
         'company': $('select[name=company]').val(),
         'account': $('select[name=account]').val()
@@ -187,7 +182,6 @@
           let conteudo_linha = "<tr class='entry" + data.id + "'>" +
                         "<td>" + data.date + "</td>"+
                         "<td>" + data.account_description + "</td>"+
-                        "<td>" + data.es + "</td>"+
                         "<td>" + data.value + "</td>"+
                         "<td>" + data.company_name + "</td>"+
                         "<td>" +
@@ -197,7 +191,6 @@
                                "data-value='" + data.value + "'" +
                                "data-date='" + data.date + "'" +
                                "data-info='" + data.info + "'" +
-                               "data-es='" + data.es + "'" +
                                "data-account='" + data.account_id + "'" +
                                "data-company='" + data.company_id + "'" +
                                ">Editar </a>" +
@@ -231,7 +224,6 @@ $(document).on('click', '.edit-modal', function() {
   $('#date').val($(this).data('date'));
   $('#edit').modal('show');
   $('#info').val($(this).data('info'));
-  $('#es').val($(this).data('es'));
   $('#company').val($(this).data('company'));
   $('#account').val($(this).data('account'));
 

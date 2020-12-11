@@ -48,13 +48,24 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Analítica/Sintética</label>
                     <div class="col-sm-1">
-                        <select class="form-control" name="type" style="width: 100%;">
+                        <select class="form-control" name="summary" style="width: 100%;">
                             <option selected="selected">A</option>
                             <option>S</option>
                         </select>
                     </div>
                 </div>
                 
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Natureza: Receita/Despesa</label>
+                    <div class="col-sm-1">
+                        <select class="form-control" name="type" style="width: 100%;">
+                            <option selected="selected">D</option>
+                            <option>R</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                 </div>
 

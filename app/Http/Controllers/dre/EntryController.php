@@ -41,7 +41,7 @@ class EntryController extends Controller
         if ($sortBy == "Conta") $sort = 'account_id';
 
         $entries = Entry::search($q)->orderBy($sort, $orderBy)->paginate($perPage);
-        $accounts = Account::where('type', 'A')->get();
+        $accounts = Account::where('summary', 'A')->get();
         $companies = Company::all();
 
         return view('dre.entries.index', compact('entries', 'accounts', 'companies', 'orderBy', 'sortBy', 'q', 'perPage'));
@@ -57,7 +57,6 @@ class EntryController extends Controller
     {
         $data = $request->only([
             'value',
-            'es',
             'account',
             'company',
             'info'
@@ -90,7 +89,6 @@ class EntryController extends Controller
         } else {
             $entry = new Entry;
             $entry->value = $data['value'];
-            $entry->es = $data['es'];
             $entry->account_id = $data['account'];
             $entry->company_id = $data['company'];
             $entry->info = $data['info'];
@@ -108,7 +106,6 @@ class EntryController extends Controller
         $data = $request->only([
             'value',
             'date',
-            'es',
             'account',
             'company',
             'info'
@@ -143,7 +140,6 @@ class EntryController extends Controller
             
             $entry = new Entry;
             $entry->value = $data['value'];
-            $entry->es = $data['es'];
             $entry->account_id = $data['account'];
             $entry->company_id = $data['company'];
             $entry->info = $data['info'];
@@ -185,7 +181,6 @@ class EntryController extends Controller
             'id',
             'value',
             'date',
-            'es',
             'account',
             'company',
             'info'
@@ -222,7 +217,6 @@ class EntryController extends Controller
             $entry = Entry::find($data['id']);
             if ($entry) {
                 $entry->value = $data['value'];
-                $entry->es = $data['es'];
                 $entry->account_id = $data['account'];
                 $entry->company_id = $data['company'];
                 $entry->info = $data['info'];

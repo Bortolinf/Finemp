@@ -48,12 +48,13 @@ class FirstTables extends Migration
             $table->string('description', 100);
             $table->timestamps();
             $table->bigInteger('tenant_id')->unsigned();
-            $table->string('type', 1); // A = analitico // S = sintetico
+            $table->string('summary', 1); // A = analitico // S = sintetico
+            $table->string('type', 1); // R = receita // D = despesa
             $table->string('special_rule', 10)->nullable();     // alguma regra especial
             $table->string('special_rule_cod', 15)->nullable(); // algum código vinculado a regra especial
+            $table->double('special_rule_value')->unsigned()->default('0'); // algum valor vinculado a regra especial 
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->primary(['id_account', 'tenant_id']);
-
         });
 
 
@@ -63,7 +64,8 @@ class FirstTables extends Migration
             $table->date('date');
             $table->bigInteger('company_id')->unsigned();
             $table->string('account_id');
-            $table->string('es', 1); // E = entrada(receita)  S = saída (despesa)
+            //$table->string('es', 1); // E = entrada(receita)  S = saída (despesa)
+            // vou pegar o campo rece
             $table->double('value')->unsigned();
             $table->text('info')->nullable();
             $table->timestamps();

@@ -47,16 +47,32 @@
                 <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Analítica / Sintética</label>
                     <div class="col-sm-1">
-                        <select class="form-control" name="type" style="width: 100%;">
-                        <option selected="selected">{{$account->type}}</option>
+                        <select class="form-control" name="summary" style="width: 100%;">
+                        <option selected="selected">{{$account->summary}}</option>
                         <option>
-                            @if ($account->type == 'A') S
+                            @if ($account->summary == 'A') S
                             @else A 
                             @endif
                         </option>
                         </select>
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Receita / Despesa</label>
+                        <div class="col-sm-1">
+                            <select class="form-control" name="type" style="width: 100%;">
+                            <option selected="selected">{{$account->type}}</option>
+                            <option>
+                                @if ($account->type == 'R') D
+                                @else R 
+                                @endif
+                            </option>
+                            </select>
+                        </div>
+                    </div>
+    
+    
 
                 <div class="form-group row">
                 </div>

@@ -45,6 +45,7 @@ class AccountController extends Controller
         $data = $request->only([
             'id_account',
             'description',
+            'summary',
             'type'
         ]);
 
@@ -79,7 +80,9 @@ class AccountController extends Controller
         $account = new Account;
         $account->id_account = $data['id_account'];
         $account->description = $data['description'];
+        $account->summary = $data['summary'];
         $account->type = $data['type'];
+        $account->special_rule_value = 0;
         $account->save();
 
         return redirect()->route('accounts.index');
@@ -109,17 +112,20 @@ class AccountController extends Controller
         if ($account) {
             $data = $request->only([
                 'description',
+                'summary',
                 'type'
             ]);
 
 
             $messages = [
                 'description.required' => 'Informar Descrição da Conta',
-                'type.requires' => 'Informar tipo: Sintétca ou Analítica'
+                'summary.requires' => 'Informar Tipo: Sintétca ou Analítica',
+                'type.requires' => 'Informar Natureza: Receita ou Despesa'
             ];
             // so fazer este validator quando alterar o nome
             $validator = Validator::make($data, [
                 'description' => ['required', 'string', 'max:100'],
+                'summary' => ['required', 'string', 'max:1'],
                 'type' => ['required', 'string', 'max:1'],
             ],
             $messages
@@ -133,6 +139,8 @@ class AccountController extends Controller
     
             $account->description = $data['description'];
             $account->type = $data['type'];
+            $account->summary = $data['summary'];
+            $account->special_rule_value = 0;
             $account->save();
             
         } // if($account)

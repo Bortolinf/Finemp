@@ -21,12 +21,14 @@
                     <th>Cód.Conta</th>
                     <th>Descrição</th>
                     <th>Tipo</th>
+                    <th>Natureza</th>
                     <th>Ações</th>
                 </tr>
                 @foreach($accounts as $account)
                     <tr>
                         <td>{{$account->id_account}}</td>
                         <td>{{$account->description}}</td>
+                        <td>{{$account->summary}}</td>
                         <td>{{$account->type}}</td>
                         <td>
                         @can('Editar_Filiais')    
