@@ -16,7 +16,7 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('tenant_id')->unsigned();
-            $table->string('income_acount');
+            $table->string('income_account');
             $table->timestamps();
             $table->foreign('income_account')->references('id_account')->on('accounts');
             $table->foreign('tenant_id')->references('id')->on('tenants');
