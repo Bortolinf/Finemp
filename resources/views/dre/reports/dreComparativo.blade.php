@@ -29,7 +29,7 @@
             @csrf
 
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Período de Referência</label>
                     <input type="month" id="per_ref" name="per_ref" value="{{$per_ref}}" class="form-control" />
@@ -80,21 +80,38 @@
     <div class="card">
         <div class="card-body">
 
-
             <table class="table table-hover table-sm" id="table">
                 <tr>
                     <th>Conta</th>
                     <th>Descrição</th>
-                    <th>Per.Refer</th>
-                    <th>Per.Acumul</th>
+                    <th class="text-right">{{$cab_date_ant}}</th>
+                    <th class="text-right">%</th>
+                    <th class="text-right">{{$cab_date}}</th>
+                    <th class="text-right">%</th>
+                    <th class="text-right">{{$cab_date_acm_ant}}</th>
+                    <th class="text-right">%</th>
+                    <th class="text-right">{{$cab_date_acm}}</th>
+                    <th class="text-right">%</th>
                 </tr>
 
                 @foreach($accounts as $account)
+                    @php
+                        if($ref > 0) { $pct = $account->saldo_final / $ref * 100; } else { $pct = 0; }  
+                        if($ref_ant > 0) { $pct_ant = $account->saldo_final_ant / $ref_ant * 100; } else { $pct_ant = 0; }  
+                        if($ref_acm > 0) { $pct_acm = $account->saldo_final_acm / $ref_acm * 100; } else { $pct_acm = 0; }
+                        if($ref_acm_ant > 0) { $pct_acm_ant = $account->saldo_final_acm_ant / $ref_acm_ant * 100; } else { $pct_acm_ant = 0; }  
+                    @endphp
                     <tr class="entry">
                         <td>{{$account->id_account}}</td>
                         <td>{{$account->description}}</td>
-                        <td>{{$account->saldo_final}}</td>
-                        <td>{{$account->saldo_final_acm}}</td>
+                        <td class="text-right">{{number_format($account->saldo_final_ant, 2, ',', '.')}}</td>
+                        <td class="text-right"><small>{{round($pct_ant,2)}}%</small></td>
+                        <td class="text-right">{{number_format($account->saldo_final, 2, ',', '.')}}</td>
+                        <td class="text-right"><small>{{round($pct,2)}}%</small></td>
+                        <td class="text-right">{{number_format($account->saldo_final_acm_ant, 2, ',', '.')}}</td>
+                        <td class="text-right"><small>{{round($pct_acm_ant,2)}}%</small></td>
+                        <td class="text-right">{{number_format($account->saldo_final_acm, 2, ',', '.')}}</td>
+                        <td class="text-right"><small>{{round($pct_acm,2)}}%</small></td>
                     </td>
                 @endforeach
 

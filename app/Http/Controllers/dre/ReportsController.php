@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Entry;
 use App\Models\Account;
 use App\Models\Company;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -194,6 +195,7 @@ class ReportsController extends Controller
 
     public function dreComparativo(Request $request)
     {
+        // definição das datas
         $per_ref = date('Y-m');
         if ($request->filled('per_ref')) $per_ref = $request->input('per_ref');
         
@@ -203,21 +205,24 @@ class ReportsController extends Controller
         $date_f_ant = date("Y-m-t", strtotime("-1 year", strtotime($per_ref)));
         $date_acm_i = date("Y-01-01", strtotime($per_ref));
         $date_acm_i_ant = date("Y-01-01", strtotime("-1 year", strtotime($per_ref)));
-
+        // cabecalhos de datas
         $cab_date = date("M/y", strtotime($date_i));
         $cab_date_acm = date("M/y", strtotime($date_acm_i)).' a '.date("M/y", strtotime($date_i));
+        $cab_date_ant = date("M/y", strtotime($date_i_ant));
+        $cab_date_acm_ant = date("M/y", strtotime($date_acm_i_ant)).' a '.date("M/y", strtotime($date_i_ant));
 
-        echo 'cab_date:'.$cab_date.'<br>'; 
-        echo 'cab_date_acm:'.$cab_date_acm.'<br>'; 
+        // conta de referencia p/calcualr percentual
+        $setting = Setting::First();
+        $account_ref = '1.1.1.1';
+        if ($setting) {
+            $account_ref = $setting->income_account;
+        }
+        
+        $ref = 0;
+        $ref_acm = 0;
+        $ref_ant = 0;
+        $ref_acm_ant = 0;
 
-        echo 'per_ref:'.$per_ref.'<br>'; 
-
-        echo 'i:'.$date_i.'<br>f:'.$date_f.'<br>';
-        echo 'i-ant:'.$date_i_ant.'<br>f-ant:'.$date_f_ant.'<br>';
-        echo 'acm-i:'.$date_acm_i.'<br>acm-f:'.$date_f.'<br>';
-        echo 'acm-i-ant:'.$date_acm_i_ant.'<br>acm-f-ant:'.$date_f_ant.'<br>';
-       // var_dump($request);
-       // exit();
 
         $companies = Company::all();
         $ten = auth()->user()->tenant_id;
@@ -234,15 +239,29 @@ class ReportsController extends Controller
         foreach($accounts as $account) {
             $account->entradas = 0;
             $account->saidas = 0;
+            // lancamentos do mês
             $entries = Entry::where('account_id', 'like', $account->id_account.'%')
                     ->whereBetween('date', [$date_i, $date_f])
                     ->whereIn('company_id', $filterCompanies)
                     ->get();
+            // lancamentos acumulados
             $entries_acm = Entry::where('account_id', 'like', $account->id_account.'%')
                     ->whereBetween('date', [$date_acm_i, $date_f])
                     ->whereIn('company_id', $filterCompanies)
                     ->get();
 
+            // lancamentos do mês - ano anterior
+            $entries_ant = Entry::where('account_id', 'like', $account->id_account.'%')
+                    ->whereBetween('date', [$date_i_ant, $date_f_ant])
+                    ->whereIn('company_id', $filterCompanies)
+                    ->get();
+            // lancamentos acumulados - ano anterior
+            $entries_acm_ant = Entry::where('account_id', 'like', $account->id_account.'%')
+                    ->whereBetween('date', [$date_acm_i_ant, $date_f_ant])
+                    ->whereIn('company_id', $filterCompanies)
+                    ->get();
+
+            // salva dados do movimento do mes        
             foreach($entries as $entry) {
                // var_dump($entry);
                // exit();
@@ -266,11 +285,57 @@ class ReportsController extends Controller
                  } 
              }
  
+            // salva dados do movimento do mes - ano anterior        
+            foreach($entries_ant as $entry) {
+                // var_dump($entry);
+                // exit();
+                 if ($entry->account->type == 'R') {
+                     $account->entradas_ant += $entry->value;
+                 } 
+                 if ($entry->account->type == 'D') {
+                     $account->saidas_ant += $entry->value;
+                 } 
+             }
+ 
+             // salva dados do movimento acumulado - ano anterior
+             foreach($entries_acm_ant as $entry) {
+                 // var_dump($entry);
+                 // exit();
+                  if ($entry->account->type == 'R') {
+                      $account->entradas_acm_ant += $entry->value;
+                  } 
+                  if ($entry->account->type == 'D') {
+                      $account->saidas_acm_ant += $entry->value;
+                  } 
+              }
+  
+            // calculo dos saldos             
             $account->saldo_final = $account->entradas - $account->saidas;
             $account->saldo_final_acm = $account->entradas_acm - $account->saidas_acm;
-        } 
+            $account->saldo_final_ant = $account->entradas_ant - $account->saidas_ant;
+            $account->saldo_final_acm_ant = $account->entradas_acm_ant - $account->saidas_acm_ant;
+            if ($account->id_account == $account_ref) {
+                $ref = $account->saldo_final;
+                $ref_acm = $account->saldo_final_acm;
+                $ref_ant = $account->saldo_final_ant;
+                $ref_acm_ant = $account->saldo_final_acm_ant;
+            }
 
-        return view('dre.reports.dreComparativo', ['companies' => $companies, 'filterCompanies' => $filterCompanies, 'accounts' => $accounts, 'per_ref' => $per_ref ]);
+        } //foreach account
+
+        return view('dre.reports.dreComparativo', [ 'companies' => $companies, 
+                                                    'filterCompanies' => $filterCompanies, 
+                                                    'accounts' => $accounts, 
+                                                    'per_ref' => $per_ref,
+                                                    'cab_date' => $cab_date,
+                                                    'cab_date_acm' => $cab_date_acm,
+                                                    'cab_date_ant' => $cab_date_ant,
+                                                    'cab_date_acm_ant' => $cab_date_acm_ant,
+                                                    'ref' => $ref,
+                                                    'ref_acm' => $ref_acm,
+                                                    'ref_ant' => $ref_ant,
+                                                    'ref_acm_ant' => $ref_acm_ant,
+                                                     ]);
 
 
     } //dreComparativo

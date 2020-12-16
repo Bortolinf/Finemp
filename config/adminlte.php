@@ -243,9 +243,8 @@ return [
             'url'  => 'painel',
             'icon' => 'far fa-fw fa-file',
         ],
-        ['header' => 'account_settings'],
         [
-            'text' => 'profile',
+            'text' => 'Meu Perfil',
             'url'  => 'painel/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
@@ -264,19 +263,19 @@ return [
         ],
         [
             'text'    => 'Filiais',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-sitemap',
             'url'  => 'dre/companies',
             'can'  => 'Editar_Filiais',
         ],
         [
             'text'    => 'Plano de Contas',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-list-ol',
             'url'  => 'dre/accounts',
             'can'  => 'Editar_Contas',
         ],
         [
             'text'    => 'Lançamentos Diários',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-edit',
             'url'  => 'dre/entries',
             'can'  => 'Editar_Lanctos',
         ],
@@ -306,16 +305,23 @@ return [
         ],
         [
             'text'    => 'Gerenciador',
-            'icon'    => 'fas fa-fw fa-users-cog',
+            'icon'    => 'fas fa-fw fa-cogs',
             'can'  => 'is-admin',
             'submenu' => [
                 [
                     'text' => 'Grupos de Usuários',
                     'url'  => 'painel/roles',
+                    'icon'    => 'fas fa-fw fa-users',
                 ],
                 [
                     'text' => 'Permissões',
                     'url'  => 'painel/abilities',
+                    'icon'    => 'fas fa-fw fa-user-lock',
+                ],
+                [
+                    'text' => 'Configurações',
+                    'url'  => 'dre/settings',
+                    'icon' => 'fas fa-fw fa-cog',
                 ],
             ],
         ],

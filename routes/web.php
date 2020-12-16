@@ -52,13 +52,16 @@ Route::prefix('painel')->group(function(){
     // esse comando gera todas as rotas do crud das permissoes 
     Route::resource('abilities', 'Admin\AbilityController')->middleware('checkadmin');
 
+    
 }); 
 
 
 
 //prefixo dre
 Route::prefix('dre')->group(function(){
-
+    // esse comando gera todas as rotas do crud das configuracoes 
+    Route::resource('settings', 'dre\SettingController')->middleware('checkadmin');
+    
     // esse comando gera todas as rotas do crud das filiais
     Route::resource('companies', 'dre\CompanyController')->middleware('can:Editar_Filiais');
 
