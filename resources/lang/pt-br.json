@@ -1,0 +1,11 @@
+{
+    "Hello" : "Olá",
+    "Reset Password Notification" : "Notificação para Troca de Senha",
+    "You are receiving this email because we received a password reset request for your account." : "Você está recebendo este e-mail porque nós recebemos uma solicitação de troca de senha para sua conta.",
+    "Reset Password" : "Troca de Senha",
+    "This password reset link will expire in :count minutes." : "Este link de troca de senha vai expirar em :count minutos.",
+    "If you did not request a password reset, no further action is required." : "Se você não solicitou a troca de senha, nenhuma ação é necessária.",
+    "E-Mail Address" : "Endereço de E-mail",
+    "Password" : "Senha",
+    "Confirm Password" : "Confirmação da Senha"
+}

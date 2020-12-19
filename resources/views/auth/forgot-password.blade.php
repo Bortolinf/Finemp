@@ -20,12 +20,12 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="../../index2.html"><b>Fin</b>Emp</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+      <p class="login-box-msg">Esqueceu sua Senha? Aqui você poderá obeter uma nova senha.</p>
 
       @if (session('status'))
         <div class="alert alert-success">
@@ -46,7 +46,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Request new password</button>
+            <button type="submit" class="btn btn-primary btn-block">Registrar Nova Senha</button>
           </div>
           <!-- /.col -->
         </div>
@@ -56,7 +56,7 @@
         <a href="painel/login">Login</a>
       </p>
       <p class="mb-0">
-        <a href="painel/register" class="text-center">Register a new membership</a>
+        <a href="painel/register" class="text-center">Registrar Novo Usuário</a>
       </p>
     </div>
     <!-- /.login-card-body -->
