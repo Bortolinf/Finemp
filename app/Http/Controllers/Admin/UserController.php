@@ -85,8 +85,10 @@ class UserController extends Controller
         //cadastra os perfis de usuario selecionados
         $roles = Role::All();
         foreach ($roles as $role) {
-            if (isset($data[$role->name])) {
-                if ($data[$role->name] == 'on') {
+            // tratamento para situacoes com espacos no meio do nome p/fechar com o HTML
+            $roleName = str_replace(' ', '_', $role->name);
+            if (isset($data[$roleName])) {
+                if ($data[$roleName] == 'on') {
                     $user->assignRole($role);
                 }
             }
@@ -212,8 +214,10 @@ class UserController extends Controller
             //cadastra os perfis selecionados - e exclui os nao selecionados
             $roles = Role::All();
             foreach ($roles as $role) {
-                if (isset($data[$role->name])) {
-                    if ($data[$role->name] == 'on') {
+                // tratamento para situacoes com espacos no meio do nome p/fechar com o HTML
+                $roleName = str_replace(' ', '_', $role->name);
+                if (isset($data[$roleName])) {
+                    if ($data[$roleName] == 'on') {
                         $user->assignRole($role);
                     } else {
                         $user->disassignRole($role);
