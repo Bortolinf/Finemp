@@ -57,18 +57,23 @@ class SettingController extends Controller
     {
 
         $data = $request->only([
-            'income_account'
+            'income_account',
+            'expense_account'
         ]);
 
 
         $messages = [
             'income_account.required' => 'Informar Conta de Receita Bruta',
+            'expense_account.required' => 'Informar Conta Para Total das Despesas',
         ];
 
         $validator = Validator::make(
             $data,
             [
                 'income_account' => [
+                    'required', 'string', 'max:100'                    
+                ],
+                'expense_account' => [
                     'required', 'string', 'max:100'                    
                 ],
             ],
@@ -84,6 +89,7 @@ class SettingController extends Controller
         
         $setting = new Setting;
         $setting->income_account = $data['income_account'];
+        $setting->expense_account = $data['expense_account'];
         $setting->save();
 
         return redirect()->route('admin');
@@ -105,15 +111,19 @@ class SettingController extends Controller
         $setting = Setting::find($id);
         if ($setting) {
             $data = $request->only([
-                'income_account'
+                'income_account',
+                'expense_account'
             ]);
 
             $messages = [
-                'income_account.required' => 'Informar Conta Receita Bruta'
+                'income_account.required' => 'Informar Conta Receita Bruta',
+                'expense_account.required' => 'Informar Conta para Total das Despesas',
             ];
             // so fazer este validator quando alterar o nome
             $validator = Validator::make($data, [
                 'income_account' => ['required', 'string', 'max:255', 
+                ],
+                'expense_account' => ['required', 'string', 'max:255', 
                 ],
             ],
             $messages
@@ -124,6 +134,7 @@ class SettingController extends Controller
                 ])->withErrors($validator);
             }
             $setting->income_account = $data['income_account'];
+            $setting->expense_account = $data['expense_account'];
             $setting->save();
         } // if($company)
 

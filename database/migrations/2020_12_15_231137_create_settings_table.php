@@ -17,8 +17,10 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->bigInteger('tenant_id')->unsigned();
             $table->string('income_account');
+            $table->string('expense_account');
             $table->timestamps();
             $table->foreign('income_account')->references('id_account')->on('accounts');
+            $table->foreign('expense_account')->references('id_account')->on('accounts');
             $table->foreign('tenant_id')->references('id')->on('tenants');
         });
     }

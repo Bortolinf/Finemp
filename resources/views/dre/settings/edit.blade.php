@@ -44,7 +44,24 @@
                       </div>
                 </div>
   
-               
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Conta com Total das Despesas </label>
+                      <div class="col-sm-10">
+                        <select class="form-control" id="expense_account" name="expense_account" style="width: 100%;">
+                          @foreach($accounts as $account)
+                            <option value="{{$account->id_account}}"
+                             @if ($account->id_account == $setting->expense_account)
+                               selected
+                             @endif   
+                                >{{$account->description}}</option>
+                          @endforeach
+                          </select>
+                      </div>
+                </div>
+                
+
                 <div class="form-group row">
                     <div class="col-sm-9">
                         <input type="submit" value="Salvar" class="btn btn-success" />

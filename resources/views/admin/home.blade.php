@@ -60,9 +60,7 @@ Painel Inicial do Sistema
             <i class="fas fa-square text-primary"></i> Receitas
             </span>
 
-            <span>
-            <i class="fas fa-square text-gray"></i> Outra Coisa
-            </span>
+            <!-- <span><i class="fas fa-square text-gray"></i> Outra Coisa</span>  -->
         </div>
         </div>
        </div>
@@ -74,7 +72,7 @@ Painel Inicial do Sistema
       <div class="card">
          <div class="card-header border-0">
         <div class="d-flex justify-content-between">
-            <h3 class="card-title">Sales</h3>
+            <h3 class="card-title">Receitas x Despesas</h3>
             <a href="javascript:void(0);">View Report</a>
         </div>
         </div>
@@ -99,11 +97,11 @@ Painel Inicial do Sistema
 
         <div class="d-flex flex-row justify-content-end">
             <span class="mr-2">
-            <i class="fas fa-square text-primary"></i> This year
+            <i class="fas fa-square text-primary"></i> Receitas
             </span>
 
             <span>
-            <i class="fas fa-square text-gray"></i> Last year
+            <i class="fas fa-square text-gray"></i> Despesas
             </span>
         </div>
         </div>
@@ -141,17 +139,17 @@ $(function () {
     var salesChart  = new Chart($salesChart, {
       type   : 'bar',
       data   : {
-        labels  : ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        labels  : [ @foreach($data2['labels'] as $lb1) '{{$lb1}}',  @endforeach],
         datasets: [
           {
             backgroundColor: '#007bff',
             borderColor    : '#007bff',
-            data           : [1000, 2000, 3000, 2500, 2700, 2500, 3000]
+            data           : [ @foreach($data2['incomes'] as $inc1) {{$inc1}},  @endforeach] 
           },
           {
             backgroundColor: '#ced4da',
             borderColor    : '#ced4da',
-            data           : [700, 1700, 2700, 2000, 1800, 1500, 2000]
+            data           : [ @foreach($data2['expenses'] as $exp1) {{$exp1}},  @endforeach]
           }
         ]
       },
@@ -204,10 +202,10 @@ $(function () {
     var $visitorsChart = $('#visitors-chart')
     var visitorsChart  = new Chart($visitorsChart, {
       data   : {
-        labels  : ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
+        labels  : [ @foreach($data1['labels'] as $lb1) '{{$lb1}}',  @endforeach],
         datasets: [{
           type                : 'line',
-          data                : [100, 120, 170, 167, 180, 177, 160],
+          data                : [ @foreach($data1['values'] as $dv1) {{$dv1}},  @endforeach],
           backgroundColor     : 'transparent',
           borderColor         : '#007bff',
           pointBorderColor    : '#007bff',
@@ -216,17 +214,18 @@ $(function () {
           // pointHoverBackgroundColor: '#007bff',
           // pointHoverBorderColor    : '#007bff'
         },
-          {
-            type                : 'line',
-            data                : [60, 80, 70, 67, 80, 77, 100],
-            backgroundColor     : 'tansparent',
-            borderColor         : '#ced4da',
-            pointBorderColor    : '#ced4da',
-            pointBackgroundColor: '#ced4da',
-            fill                : false
+       //   {
+       //     type                : 'line',
+       //     data                : [60, 80, 70, 67, 80, 77, 100],
+       //     backgroundColor     : 'tansparent',
+       //     borderColor         : '#ced4da',
+       //     pointBorderColor    : '#ced4da',
+       //     pointBackgroundColor: '#ced4da',
+       //     fill                : false
             // pointHoverBackgroundColor: '#ced4da',
             // pointHoverBorderColor    : '#ced4da'
-          }]
+       //   }
+        ]
       },
       options: {
         maintainAspectRatio: false,
