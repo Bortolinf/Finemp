@@ -62,7 +62,7 @@
                 <tr>
                     <th>Data</th>
                     <th>Conta</th>
-                    <th>Valor</th>
+                    <th class="text-right">Valor</th>
                     <th>Filial</th>
                     <th>Ações</th>
                 </tr>
@@ -70,7 +70,7 @@
                     <tr class="entry{{$entry->id}}">
                         <td>{{$entry->date}}</td>
                         <td>{{$entry->account->description}}</td>
-                        <td>{{$entry->value}}</td>
+                        <td class="text-right">{{number_format($entry->value, 2, ',', '.')}} </td>
                         <td>{{$entry->company->name}}</td>
                         <td>
                         @can('Editar_Lanctos')    
@@ -182,10 +182,9 @@
           let conteudo_linha = "<tr class='entry" + data.id + "'>" +
                         "<td>" + data.date + "</td>"+
                         "<td>" + data.account_description + "</td>"+
-                        "<td>" + data.value + "</td>"+
+                        "<td class='text-right'>" + formatMoney(data.value) + "</td>"+
                         "<td>" + data.company_name + "</td>"+
                         "<td>" +
-                        
                           "<a href='#' class='edit-modal btn btn-warning btn-sm'" + 
                                "data-id='" + data.id + "'" +
                                "data-value='" + data.value + "'" +
@@ -198,7 +197,7 @@
                            ' @csrf ' + ' @method("DELETE")' + "<button class='btn btn-sm btn-danger'>Excluir</button></form>" +
                         "</td></tr>";
           if(isedit) {
-            $('.entry' + data.id).replaceWith(conteudo_linha);
+            $('.entry' + data.id).replaceWith(conteudo_linha);   
             $('#create').modal('hide');
           } else
           {
@@ -251,6 +250,27 @@ $(document).on('click', '.edit-modal', function() {
     } 
     return yyyy+'-'+mm+'-'+dd;
   }
+
+
+// formata valor a exibir com as casa decimais.
+function formatMoney(number, decPlaces, decSep, thouSep) {
+decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+decSep = typeof decSep === "undefined" ? "." : decSep;
+thouSep = typeof thouSep === "undefined" ? "," : thouSep;
+var sign = number < 0 ? "-" : "";
+var i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decPlaces)));
+var j = (j = i.length) > 3 ? j % 3 : 0;
+
+return sign +
+	(j ? i.substr(0, j) + thouSep : "") +
+	i.substr(j).replace(/(\decSep{3})(?=\decSep)/g, "$1" + thouSep) +
+	(decPlaces ? decSep + Math.abs(number - i).toFixed(decPlaces).slice(2) : "");
+}
+
+document.getElementById("b").addEventListener("click", event => {
+  document.getElementById("x").innerText = "Result was: " + formatMoney(document.getElementById("d").value);
+});
+
 
 
 </script>

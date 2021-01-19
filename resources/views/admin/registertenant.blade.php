@@ -42,21 +42,22 @@
 
        
         {{-- Prefix field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="prefix" class="form-control {{ $errors->has('prefix') ? 'is-invalid' : '' }}"
-                   value="{{ old('prefix') }}" placeholder="Prefixo (nome curto sem espaços)">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-tag {{ config('adminlte.classes_auth_icon', '') }}"></span>
+        <!--   sem utilidade por enquanto 
+            <div class="input-group mb-3">
+                <input type="text" name="prefix" class="form-control {{ $errors->has('prefix') ? 'is-invalid' : '' }}"
+                    value="{{ old('prefix') }}" placeholder="Prefixo (nome curto sem espaços)">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-tag {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                    </div>
                 </div>
+                @if($errors->has('prefix'))
+                    <div class="invalid-feedback">
+                        <strong>{{ $errors->first('prefix') }}</strong>
+                    </div>
+                @endif
             </div>
-            @if($errors->has('prefix'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('prefix') }}</strong>
-                </div>
-            @endif
-        </div>
-
+        --> 
 
 
 

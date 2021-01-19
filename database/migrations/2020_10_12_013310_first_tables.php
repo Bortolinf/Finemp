@@ -71,7 +71,7 @@ class FirstTables extends Migration
             $table->timestamps();
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('account_id')->references('id_account')->on('accounts')->onDelete('cascade');
+            $table->foreign(['account_id', 'tenant_id'])->references(['id_account', 'tenant_id'])->on('accounts')->onDelete('cascade');
         });
 
     }

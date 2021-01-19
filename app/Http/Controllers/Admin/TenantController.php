@@ -23,7 +23,7 @@ class TenantController extends Controller
         $data = $request->only([
             'name',
             'email',
-            'prefix',
+          //  'prefix',
             'username',
             'useremail',
             'password',
@@ -54,7 +54,7 @@ class TenantController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:tenants,email'],
-            'prefix' => ['required', 'string', 'max:30', 'unique:tenants,prefix'],
+         //   'prefix' => ['required', 'string', 'max:30', 'unique:tenants,prefix'],
             'username' => ['required', 'string', 'max:100'],
             'useremail' => ['required', 'string', 'email', 'max:100', 'unique:users,email'],
             'password' => ['required', 'string', 'min:4', 'confirmed'],
@@ -68,7 +68,8 @@ class TenantController extends Controller
         $ten = new Tenant;
         $ten->name = $data['name'];
         $ten->email = $data['email']; 
-        $ten->prefix = $data['prefix'];
+        $ten->prefix = $data['name'];
+     //   $ten->prefix = $data['prefix'];
         $ten->save();
         return $ten;
        // return Tenant::create([
