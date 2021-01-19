@@ -21,12 +21,97 @@ class AccountController extends Controller
 
     public function index()
     {
+        $showInfo = true;
         $accounts = Account::paginate(15);
+        if(count($accounts) > 0) {
+            $showInfo = false;
+        }
         return view('dre.accounts.index', [
-            'accounts' => $accounts
+            'accounts' => $accounts,
+            'showInfo' => $showInfo,
         ]);
 
     }
+
+
+
+    public function autoCreate()
+    {
+        $loggedId = Auth::id();
+        $user = User::find($loggedId);
+
+        $accounts = [];
+        $i = 1;
+        $accounts[$i]['cod'] = '1';
+        $accounts[$i]['dsc'] = 'Resultado';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'R';
+        $i++;
+        $accounts[$i]['cod'] = '1.1';
+        $accounts[$i]['dsc'] = 'LUCRO BRUTO';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'R';
+        $i++;
+        $accounts[$i]['cod'] = '1.1.1';
+        $accounts[$i]['dsc'] = 'Receita Líquida';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'R';
+        $i++;
+        $accounts[$i]['cod'] = '1.1.1.1';
+        $accounts[$i]['dsc'] = 'Receita com Vendas';
+        $accounts[$i]['AS'] = 'A';
+        $accounts[$i]['RD'] = 'R';
+        $i++;
+        $accounts[$i]['cod'] = '1.1.1.2';
+        $accounts[$i]['dsc'] = '(-)Abatimentos / Impostos';
+        $accounts[$i]['AS'] = 'A';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.1.2';
+        $accounts[$i]['dsc'] = 'CMV - Custo da Mercadoria Vendida';
+        $accounts[$i]['AS'] = 'A';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.2';
+        $accounts[$i]['dsc'] = 'DESPESAS';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.2.1';
+        $accounts[$i]['dsc'] = 'Despesas Operacionais';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.2.1.1';
+        $accounts[$i]['dsc'] = 'Salários e Ordenados';
+        $accounts[$i]['AS'] = 'A';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.2.2';
+        $accounts[$i]['dsc'] = 'Despesas com Vendas';
+        $accounts[$i]['AS'] = 'S';
+        $accounts[$i]['RD'] = 'D';
+        $i++;
+        $accounts[$i]['cod'] = '1.2.2.1';
+        $accounts[$i]['dsc'] = 'Comissões';
+        $accounts[$i]['AS'] = 'A';
+        $accounts[$i]['RD'] = 'D';
+
+        foreach($accounts as $cta){
+            $account = new Account;
+            $account->id_account = $cta['cod'];
+            $account->description = $cta['dsc'];
+            $account->summary = $cta['AS'];
+            $account->type = $cta['RD'];
+            $account->special_rule_value = 0;
+            $account->save();
+        }
+
+        return redirect()->route('accounts.index');
+
+    }
+
+
 
     public function create()
     {
@@ -108,6 +193,7 @@ class AccountController extends Controller
 
     public function update(Request $request, $id)
     {
+       // $account = Account::select()->where('id_account', $id)->where('tenant_id', Auth::user()->tenant_id)->first();
         $account = Account::find($id);
         if ($account) {
             $data = $request->only([
@@ -153,8 +239,11 @@ class AccountController extends Controller
 
     public function destroy($id)
     {
-        $account = Account::find($id);
-        $account->delete();
+        //$account = Account::find($id);
+        $account = Account::select()->where('id_account', $id)->where('tenant_id', Auth::user()->tenant_id)->first();
+        if($account){
+            $account->delete();
+        }
         return redirect()->route('accounts.index');
     }
 

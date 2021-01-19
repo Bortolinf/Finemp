@@ -78,7 +78,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <h1 class="w3-padding-32">Principais Recursos</h1>
       <h5>
         <i class="fa fa-cloud w3-text-indigo w3-margin-right"></i>
-       Arquitetura Moderna - não se preocupe com servidores ou backups, seus dados ficam salvos na nuvem em segurança e disponíveis em qualquer lugar com acesso a internet.  
+       Arquitetura moderna - seus dados ficam salvos na nuvem, e podem ser acessados através de computador, tablet ou celular.  
       </h5>
 
       <h5>
@@ -89,6 +89,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <h5>
         <i class="fa fa-sitemap w3-text-indigo w3-margin-right"></i>
         Controle por Filiais - controle os resultados por filiais ou o resultado global da empresa
+      </h5>
+
+      <h5>
+        <i class="fa fa-list-ul w3-text-indigo w3-margin-right"></i>
+        Plano de Contas Personalizado - você define seu plano de contas de acordo com o seu negócio
       </h5>
 
       <h5>
@@ -105,9 +110,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
   <div class="w3-xlarge w3-padding-32">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <a href="https://www.facebook.com/bortolin.furlanetto" target="blank">
+      <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    </a>
     <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <a href="https://www.linkedin.com/in/bortolin-furlanetto-03482a137/" target="blank">
+      <i class="fa fa-linkedin w3-hover-opacity"></i>
+    </a>
  </div>
  <p>Feito com ♥ por <a href="mailto:bortolin@yahoo.com">Bortolin Furlanetto</a></p>
 </footer>

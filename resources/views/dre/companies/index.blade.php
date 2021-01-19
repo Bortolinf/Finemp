@@ -18,13 +18,11 @@
 
             <table class="table table-hover">
                 <tr>
-                    <th>Id</th>
                     <th>Nome</th>
                     <th>Ações</th>
                 </tr>
                 @foreach($companies as $company)
                     <tr>
-                        <td>{{$company->id}}</td>
                         <td>{{$company->name}}</td>
                         <td>
                         @can('Editar_Filiais')    

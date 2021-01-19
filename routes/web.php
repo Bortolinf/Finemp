@@ -132,6 +132,7 @@ Route::prefix('dre')->group(function(){
 
     // esse comando gera todas as rotas do crud das contas
     Route::resource('accounts', 'dre\AccountController')->middleware('can:Editar_Contas');
+    Route::get('accounts.autocreate', 'dre\AccountController@autoCreate')->middleware('can:Editar_Contas')->name('accounts.autocreate');
 
     // esse comando gera todas as rotas do crud dos lancamentos
     Route::resource('entries', 'dre\EntryController')->middleware('can:Editar_Lanctos');

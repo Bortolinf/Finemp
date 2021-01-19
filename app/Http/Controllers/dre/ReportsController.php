@@ -4,16 +4,17 @@ namespace App\Http\Controllers\dre;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Http\Response;
+//use Illuminate\Support\Facades\Validator;
 use App\Models\Entry;
 use App\Models\Account;
 use App\Models\Company;
 use App\Models\Setting;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+//use App\Models\User;
+//use Illuminate\Support\Facades\Auth;
+//use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+
 
 
 class ReportsController extends Controller
@@ -145,8 +146,8 @@ class ReportsController extends Controller
 
     public function dreDoMes(Request $request)
     {
-        $date_i = '2020-11-01';
-        $date_f = '2020-12-31';
+        $date_i = date("Y-m-01");
+        $date_f = date("Y-m-t");
         if ($request->filled('date_i')) $date_i = $request->input('date_i');
         if ($request->filled('date_f')) $date_f = $request->input('date_f');
 

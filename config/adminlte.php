@@ -283,12 +283,12 @@ return [
             'text'    => 'Demonstrativos',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
-                [
-                    'text' => 'DRE Simplificado',
-                    'url'  => 'dre/dre_simples',
-                    'can'  => 'DRE_Simplificado',
-                    'icon'    => 'fas fa-fw fa-list',
-                ],
+            //    [
+            //        'text' => 'DRE Simplificado',
+            //        'url'  => 'dre/dre_simples',
+            //        'can'  => 'DRE_Simplificado',
+            //        'icon'    => 'fas fa-fw fa-list',
+            //    ],
                 [
                     'text' => 'DRE Mensal',
                     'url'  => 'dre/dre_mes',

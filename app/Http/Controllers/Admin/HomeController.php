@@ -47,10 +47,15 @@ class HomeController extends Controller
                 $expense_account = $setting->expense_account;
             }
             
-            // gera uma relacao das contas das receitas mais recentes 
+   
             $receitas = DB::table('entries')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->where('account_id', 'like', $income_account.'%')
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->orderBy('date', 'desc')
                 ->select('account_id', 'date', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('date', 'account_id')
@@ -119,18 +124,28 @@ class HomeController extends Controller
             // gera uma relacao das receitas e despesas do periodo 1 
             $receitas1 = DB::table('entries')
                 ->where('account_id', 'like', $income_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano1)
                 ->whereMonth('date', '=', $mes1)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
 
             $despesas1 = DB::table('entries')
                 ->where('account_id', 'like', $expense_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano1)
                 ->whereMonth('date', '=', $mes1)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
@@ -138,18 +153,28 @@ class HomeController extends Controller
             // gera uma relacao das receitas e despesas do periodo 2 
             $receitas2 = DB::table('entries')
                 ->where('account_id', 'like', $income_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano2)
                 ->whereMonth('date', '=', $mes2)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
 
             $despesas2 = DB::table('entries')
                 ->where('account_id', 'like', $expense_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano2)
                 ->whereMonth('date', '=', $mes2)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
@@ -158,18 +183,28 @@ class HomeController extends Controller
             // gera uma relacao das receitas e despesas do periodo 3 
             $receitas3 = DB::table('entries')
                 ->where('account_id', 'like', $income_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano3)
                 ->whereMonth('date', '=', $mes3)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
 
             $despesas3 = DB::table('entries')
                 ->where('account_id', 'like', $expense_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano3)
                 ->whereMonth('date', '=', $mes3)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
@@ -178,18 +213,28 @@ class HomeController extends Controller
             // gera uma relacao das receitas e despesas do periodo 4 
             $receitas4 = DB::table('entries')
                 ->where('account_id', 'like', $income_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano4)
                 ->whereMonth('date', '=', $mes4)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();
 
             $despesas4 = DB::table('entries')
                 ->where('account_id', 'like', $expense_account.'%')
+                ->where('entries.tenant_id', '=', $loggedTenant)
                 ->whereYear('date', '=', $ano4)
                 ->whereMonth('date', '=', $mes4)
-                ->join('accounts', 'entries.account_id', '=', 'accounts.id_account')
+                ->join('accounts', function($join)
+                {
+                    $join->on('entries.account_id', '=', 'accounts.id_account')
+                         ->on('entries.tenant_id', '=', 'accounts.tenant_id');
+                })
                 ->select('account_id', DB::raw('SUM(value) as total_vl'), 'accounts.type')
                 ->groupBy('account_id')
                 ->get();

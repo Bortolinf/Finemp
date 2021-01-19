@@ -14,10 +14,14 @@ class Setting extends Model
     use TenantScoped;
     protected $table = 'settings';  // seta nome da tabela
 
-    public function account()
+    public function income_account()
     {
         return $this->hasOne('App\Models\Account', 'id_account', 'income_account');
     }
 
+    public function expense_account()
+    {
+        return $this->hasOne('App\Models\Account', 'id_account', 'expense_account');
+    }
 
 }
