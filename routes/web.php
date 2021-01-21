@@ -96,7 +96,7 @@ Route::prefix('painel')->group(function(){
     Route::post('login', 'Admin\Auth\LoginController@authenticate');
     Route::post('logout', 'Admin\Auth\LoginController@logout')->name('logout');
 
-    Route::get('register', 'Admin\Auth\RegisterCocntroller@index')->name('register');
+    Route::get('register', 'Admin\TenantController@index')->name('register');
     Route::post('register', 'Admin\Auth\RegisterController@register');
 
     // esse comando gera todas as rotas do crud das paginas
