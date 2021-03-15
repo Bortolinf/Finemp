@@ -68,7 +68,7 @@
                 </tr>
                 @foreach($entries as $entry)
                     <tr class="entry{{$entry->id}}">
-                        <td>{{$entry->date}}</td>
+                        <td>{{ Carbon\Carbon::parse($entry->date)->format('d-m-Y') }}</td>
                         <td>{{$entry->account->description}}</td>
                         <td class="text-right">{{number_format($entry->value, 2, ',', '.')}} </td>
                         <td>{{$entry->company->name}}</td>
