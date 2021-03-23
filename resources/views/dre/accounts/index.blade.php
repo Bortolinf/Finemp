@@ -50,7 +50,7 @@
                     </ul>
                 </p>
                 <br>
-                Você quer deseja que o sistema gere uma plano de contas conforme esta estrutua?
+                Você deseja que o sistema gere um plano de contas conforme esta estrutua?
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Não, obrigado!</button>
