@@ -37,20 +37,20 @@ Painel Inicial do Sistema
           <div class="card-header border-0">
           <div class="d-flex justify-content-between">
               <h3 class="card-title">Dados das Últimas Semanas</h3>
-              <a href="javascript:void(0);">View Report</a>
+              <!-- <a href="javascript:void(0);">View Report</a> -->
           </div>
           </div>
           <div class="card-body">
           <div class="d-flex">
               <p class="d-flex flex-column">
-              <span class="text-bold text-lg">820</span>
-              <span>Visitors Over Time</span>
+              <!--  <span class="text-bold text-lg">820</span> -->
+              <!--  <span>Visitors Over Time</span> -->
               </p>
               <p class="ml-auto d-flex flex-column text-right">
               <span class="text-success">
-                  <i class="fas fa-arrow-up"></i> 12.5%
+              <!--     <i class="fas fa-arrow-up"></i> 12.5% -->
               </span>
-              <span class="text-muted">Since last week</span>
+              <!--  <span class="text-muted">Since last week</span> -->
               </p>
           </div>
           <!-- /.d-flex -->
@@ -77,20 +77,20 @@ Painel Inicial do Sistema
           <div class="card-header border-0">
           <div class="d-flex justify-content-between">
               <h3 class="card-title">Receitas x Despesas</h3>
-              <a href="javascript:void(0);">View Report</a>
+              <!--  <a href="javascript:void(0);">View Report</a> -->
           </div>
           </div>
           <div class="card-body">
           <div class="d-flex">
               <p class="d-flex flex-column">
-              <span class="text-bold text-lg">$18,230.00</span>
-              <span>Sales Over Time</span>
+              <!--  <span class="text-bold text-lg">$18,230.00</span> -->
+              <!--  <span>Sales Over Time</span> -->
               </p>
               <p class="ml-auto d-flex flex-column text-right">
               <span class="text-success">
-                  <i class="fas fa-arrow-up"></i> 33.1%
+                 <!--   <i class="fas fa-arrow-up"></i> 33.1% -->
               </span>
-              <span class="text-muted">Since last month</span>
+                <!--  <span class="text-muted">Since last month</span>  -->
               </p>
           </div>
           <!-- /.d-flex -->
