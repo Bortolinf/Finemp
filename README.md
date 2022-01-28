@@ -1,6 +1,12 @@
 
 # FINEMP - FINANCIAL CONTROL FOR COMPANIES
 
+![Tela Site](https://github.com/Bortolinf/Finemp/blob/main/public/img/screens/screen_site.png?raw=true)
+![Tela Dash](https://github.com/Bortolinf/Finemp/blob/main/public/img/screens/screen_dash.png?raw=true)
+![Tela 1](https://github.com/Bortolinf/Finemp/blob/main/public/img/screens/screen1.png?raw=true)
+![Tela 2](https://github.com/Bortolinf/Finemp/blob/main/public/img/screens/screen2.png?raw=true)
+
+
 ## System created as study case, putting in pratice my laravel lessons and studies
 
 ## What it does?
@@ -34,3 +40,8 @@
 - Go to 'Gerenciador' >>> 'Configurações' and set the Incomes an Expenses account
 - Now you can make the daily moviments
 - Enjoy!
+
+## Special Thanks:
+- Professor Bonieky Lacerda (b7web)
+- Stack Overflow
+- Indian Guys on Youtube
